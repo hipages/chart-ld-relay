@@ -6,6 +6,7 @@ replicaCount: 1
 
 image:
   repository: launchdarkly/ld-relay
+  tag: v5
 
 nameOverride: "ld-relay"
 fullnameOverride: "chart-ld-relay"
