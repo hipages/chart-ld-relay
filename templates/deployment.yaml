@@ -23,14 +23,41 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+{{ if eq .Values.redis.enabled "true" }}
+            - name: USE_REDIS
+              value: "true"
+{{ if eq .Values.redis.host "" }}
+            - name: REDIS_HOST
+              value: redis
+{{ else }}
+            - name: REDIS_HOST
+              value: {{ .Values.redis.host }}
+{{ end }}
+{{ end }}
+            - name: EXIT_ON_ERROR
+              value: "true"
+            - name: LD_ENV_PRODUCTION
+              value: "{{ .Values.ldKey }}"
+{{ if eq .Values.prometheus.enabled "true" }}
+            - name: USE_PROMETHEUS
+              value: "true"
+{{ if eq .Values.prometheus.port"" }}
+            - name: PROMETHEUS_PORT
+              value: "9253"
+{{ else }}
+            - name: PROMETHEUS_PORT
+              value: "{{ .Values.prometheus.port }}"
+{{ end }}
+{{ end }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8030
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: 8030
           readinessProbe:
             httpGet:
               path: /

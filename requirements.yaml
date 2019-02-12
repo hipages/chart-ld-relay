@@ -1,0 +1,5 @@
+dependencies:
+- name: redis
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version:  ^3.0.0
+  condition: redis.enabled
