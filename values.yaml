@@ -23,7 +23,7 @@ prometheus:
 redis:
   enabled: true
   # if you set a host here, then you are managing the redis instance
-  # host:
+  # host: <<my redis hostname>>
 
   # you can influence the redis chart also which is a dependency
   cluster:

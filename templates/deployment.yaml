@@ -24,30 +24,30 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-{{- if eq .Values.redis.enabled "true" }}
+{{- if .Values.redis.enabled }}
             - name: USE_REDIS
               value: "true"
-{{- if eq .Values.redis.host "" }}
-            - name: REDIS_HOST
-              value: redis
-{{- else }}
+{{- if .Values.redis.host }}
             - name: REDIS_HOST
               value: {{ .Values.redis.host }}
+{{- else }}
+            - name: REDIS_HOST
+              value: redis
 {{- end }}
 {{- end }}
             - name: EXIT_ON_ERROR
               value: "true"
             - name: LD_ENV_PRODUCTION
               value: "{{ .Values.ldKey }}"
-{{- if eq .Values.prometheus.enabled "true" }}
+{{- if .Values.prometheus.enabled }}
             - name: USE_PROMETHEUS
               value: "true"
-{{- if eq .Values.prometheus.port"" }}
-            - name: PROMETHEUS_PORT
-              value: "9253"
-{{- else }}
+{{- if .Values.prometheus.port }}
             - name: PROMETHEUS_PORT
               value: "{{ .Values.prometheus.port }}"
+{{- else }}
+            - name: PROMETHEUS_PORT
+              value: "9253"
 {{- end }}
 {{- end }}
 {{- range $key, $val := .Values.env }}
