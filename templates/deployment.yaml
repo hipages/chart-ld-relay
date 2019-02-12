@@ -38,7 +38,10 @@ spec:
             - name: EXIT_ON_ERROR
               value: "true"
             - name: LD_ENV_PRODUCTION
-              value: "{{ .Values.ldKey }}"
+              valueFrom:
+                secretKeyRef:
+                  key: {{ include "ld-relay.fullname" . }}
+                  name: key
 {{- if .Values.prometheus.enabled }}
             - name: USE_PROMETHEUS
               value: "true"
