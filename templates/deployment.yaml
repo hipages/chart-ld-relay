@@ -24,44 +24,44 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-{{ if eq .Values.redis.enabled "true" }}
+{{- if eq .Values.redis.enabled "true" }}
             - name: USE_REDIS
               value: "true"
-{{ if eq .Values.redis.host "" }}
+{{- if eq .Values.redis.host "" }}
             - name: REDIS_HOST
               value: redis
-{{ else }}
+{{- else }}
             - name: REDIS_HOST
               value: {{ .Values.redis.host }}
-{{ end }}
-{{ end }}
+{{- end }}
+{{- end }}
             - name: EXIT_ON_ERROR
               value: "true"
             - name: LD_ENV_PRODUCTION
               value: "{{ .Values.ldKey }}"
-{{ if eq .Values.prometheus.enabled "true" }}
+{{- if eq .Values.prometheus.enabled "true" }}
             - name: USE_PROMETHEUS
               value: "true"
-{{ if eq .Values.prometheus.port"" }}
+{{- if eq .Values.prometheus.port"" }}
             - name: PROMETHEUS_PORT
               value: "9253"
-{{ else }}
+{{- else }}
             - name: PROMETHEUS_PORT
               value: "{{ .Values.prometheus.port }}"
-{{ end }}
-{{ end }}
+{{- end }}
+{{- end }}
+{{- range $key, $val := .Values.env }}
+            - name: {{ $key | upper}}
+              value: {{ $val | quote }}
+{{- end}}
           ports:
             - name: http
               containerPort: 8030
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
-              port: 8030
+            tcpSocket: 8030
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            tcpSocket: 8030
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

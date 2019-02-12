@@ -25,6 +25,14 @@ redis:
   # if you set a host here, then you are managing the redis instance
   # host:
 
+  # you can influence the redis chart also which is a dependency
+  cluster:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+  usePassword: false
+
 service:
   type: ClusterIP
   port: 8030
