@@ -32,7 +32,7 @@ spec:
               value: {{ .Values.redis.host }}
 {{- else }}
             - name: REDIS_HOST
-              value: {{ .Release.Name }}-{{ include "ld-relay.name" . }}-redis-master
+              value: {{ .Release.Name }}-redis-master
 {{- end }}
 {{- end }}
             - name: EXIT_ON_ERROR
