@@ -5,6 +5,7 @@
 replicaCount: 1
 
 image:
+  pullPolicy: IfNotPresent
   repository: launchdarkly/ld-relay
   tag: v5
 

@@ -62,9 +62,11 @@ spec:
               containerPort: 8030
               protocol: TCP
           livenessProbe:
-            tcpSocket: 8030
+            tcpSocket:
+              port: 8030
           readinessProbe:
-            tcpSocket: 8030
+            tcpSocket:
+              port: 8030
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
