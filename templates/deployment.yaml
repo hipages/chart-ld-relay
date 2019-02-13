@@ -40,8 +40,8 @@ spec:
             - name: LD_ENV_PRODUCTION
               valueFrom:
                 secretKeyRef:
-                  key: {{ .Release.Name }}-{{ include "ld-relay.name" . }}
-                  name: key
+                  key: key
+                  name: {{ .Release.Name }}-{{ include "ld-relay.name" . }}
 {{- if .Values.prometheus.enabled }}
             - name: USE_PROMETHEUS
               value: "true"
