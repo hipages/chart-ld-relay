@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ld-relay.fullname" . }}
+  name: {{ .Release.Name }}-{{ include "ld-relay.name" . }}
   labels:
     app.kubernetes.io/name: {{ include "ld-relay.name" . }}
     helm.sh/chart: {{ include "ld-relay.chart" . }}
@@ -32,7 +32,7 @@ spec:
               value: {{ .Values.redis.host }}
 {{- else }}
             - name: REDIS_HOST
-              value: redis
+              value: {{ .Release.Name }}-{{ include "ld-relay.name" . }}-redis-master
 {{- end }}
 {{- end }}
             - name: EXIT_ON_ERROR

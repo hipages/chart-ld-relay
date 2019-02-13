@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ld-relay.fullname" . }}
+  name: {{ .Release.Name }}-{{ include "ld-relay.name" . }}
   labels:
     app.kubernetes.io/name: {{ include "ld-relay.name" . }}
     helm.sh/chart: {{ include "ld-relay.chart" . }}
