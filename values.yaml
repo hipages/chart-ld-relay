@@ -12,7 +12,8 @@ image:
 nameOverride: "ld-relay"
 fullnameOverride: "chart-ld-relay"
 
-ldKey: <<enter your key here>>
+ldProdKey: <<enter your key here>>
+ldTestKey: <<enter your key here>>
 
 env: {}
 # env overrides
