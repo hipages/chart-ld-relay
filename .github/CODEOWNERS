@@ -13,6 +13,3 @@
 # hip-new specific
 /*.sh        @estahn @jurgenweber
 /capistrano/ @estahn @jurgenweber
-
-# the great cronjob migration stick
-/hip-shared/scripts/ @deepaknverma @joeruello
