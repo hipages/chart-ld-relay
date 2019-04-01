@@ -19,9 +19,9 @@ env: {}
 # env overrides
 # https://github.com/launchdarkly/ld-relay#docker-environment-variables
 
+# enabled prometheus will add a ServiceMonitor for use w/ https://github.com/coreos/prometheus-operator
 prometheus:
   enabled: true
-  port: 9253
 
 redis:
   enabled: true
