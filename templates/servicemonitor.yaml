@@ -1,0 +1,21 @@
+{{ if and .Values.prometheus.enabled .Values.prometheus.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Release.Name }}-{{ include "ld-relay.name" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "ld-relay.name" . }}
+    helm.sh/chart: {{ include "ld-relay.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "ld-relay.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  endpoints:
+    - port: prometheus
+      interval: {{ .Values.prometheus.serviceMonitor.interval }}
+  namespaceSelector:
+    any: true
+{{ end }}

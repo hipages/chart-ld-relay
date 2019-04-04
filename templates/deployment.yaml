@@ -66,6 +66,15 @@ spec:
             - name: http
               containerPort: 8030
               protocol: TCP
+{{- if and .Values.prometheus.enabled .Values.prometheus.port }}
+            - name: prometheus
+              containerPort: {{ .Values.prometheus.port }}
+              protocol: TCP
+{{- else }}
+            - name: prometheus
+              containerPort: 9253
+              protocol: TCP
+{{- end}}
           livenessProbe:
             tcpSocket:
               port: 8030
