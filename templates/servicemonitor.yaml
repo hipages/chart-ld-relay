@@ -1,21 +1,21 @@
-{{ if and .Values.prometheus.exporter.enabled .Values.prometheus.operator.enabled }}
+{{ if and .Values.prometheus.enabled .Values.prometheus.serviceMonitor.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "rabbitmq-ha.fullname" . }}
-  namespace: {{ .Values.prometheus.operator.serviceMonitor.namespace }}
+  name: {{ .Release.Name }}-{{ include "ld-relay.name" . }}
   labels:
-{{- if .Values.prometheus.operator.serviceMonitor.selector }}
-{{ toYaml .Values.prometheus.operator.serviceMonitor.selector | indent 4 }}
-{{- end }}
+    app.kubernetes.io/name: {{ include "ld-relay.name" . }}
+    helm.sh/chart: {{ include "ld-relay.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   selector:
     matchLabels:
-      app: {{ template "rabbitmq-ha.name" . }}
-      release: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "ld-relay.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   endpoints:
-  - port: exporter
-    interval: {{ .Values.prometheus.operator.serviceMonitor.interval }}
+    - port: prometheus
+      interval: {{ .Values.prometheus.serviceMonitor.interval }}
   namespaceSelector:
     any: true
 {{ end }}

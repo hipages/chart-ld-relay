@@ -21,7 +21,9 @@ env: {}
 
 prometheus:
   enabled: true
-  port: 9253
+  serviceMonitor:
+    enabled: true
+    interval: 30s
 
 service:
   type: ClusterIP
@@ -78,3 +80,5 @@ redis:
 
     serviceMonitor:
       enabled: false
+      selector:
+        prometheus: kube-prometheus
