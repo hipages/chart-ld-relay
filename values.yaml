@@ -23,19 +23,6 @@ prometheus:
   enabled: true
   port: 9253
 
-redis:
-  enabled: true
-  # if you set a host here, then you are managing the redis instance
-  # host: <<my redis hostname>>
-
-  # you can influence the redis chart also which is a dependency
-  cluster:
-    enabled: false
-  master:
-    persistence:
-      enabled: true
-  usePassword: false
-
 service:
   type: ClusterIP
   port: 8030
@@ -57,3 +44,37 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+### redis backend store config ###
+# https://github.com/helm/charts/blob/master/stable/redis/values.yaml
+redis:
+  enabled: true
+
+  # you can influence the redis chart also which is a dependency
+  cluster:
+    enabled: false
+    slaveCount: 1
+
+  serviceAccount:
+    create: false
+
+  rbac:
+    create: false
+
+  usePassword: false
+
+  master:
+    persistence:
+      enabled: true
+    affinity: {}
+    tolerations: []
+
+  slave:
+    affinity: {}
+    tolerations: []
+
+  metrics:
+    enabled: false
+
+    serviceMonitor:
+      enabled: false
