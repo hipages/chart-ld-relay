@@ -57,6 +57,13 @@ spec:
             - name: PROMETHEUS_PORT
               value: "9253"
 {{- end }}
+{{- if .Values.prometheus.prefix }}
+            - name: PROMETHEUS_PREFIX
+              value: "{{ .Values.prometheus.prefix }}"
+{{- else }}
+            - name: PROMETHEUS_PREFIX
+              value: "ld_relay"
+{{- end}}
 {{- end }}
 {{- range $key, $val := .Values.env }}
             - name: {{ $key | upper}}
