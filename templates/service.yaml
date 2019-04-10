@@ -14,6 +14,12 @@ spec:
       targetPort: 8030
       protocol: TCP
       name: http
+{{ if and .Values.prometheus.enabled .Values.prometheus.serviceMonitor.enabled }}
+    - port: {{ .Values.prometheus.prometheus.port }}
+      targetPort: {{ .Values.prometheus.prometheus.port }}
+      protocol: TCP
+      name: prometheus
+{{end}}
   selector:
     app.kubernetes.io/name: {{ include "ld-relay.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
