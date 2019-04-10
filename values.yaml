@@ -21,6 +21,7 @@ env: {}
 
 prometheus:
   enabled: true
+  port: 9253
   serviceMonitor:
     enabled: true
     interval: 30s
