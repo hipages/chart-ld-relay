@@ -15,8 +15,8 @@ spec:
       protocol: TCP
       name: http
 {{ if and .Values.prometheus.enabled .Values.prometheus.serviceMonitor.enabled }}
-    - port: {{ .Values.prometheus.prometheus.port }}
-      targetPort: {{ .Values.prometheus.prometheus.port }}
+    - port: {{ .Values.prometheus.port }}
+      targetPort: {{ .Values.prometheus.port }}
       protocol: TCP
       name: prometheus
 {{end}}
