@@ -41,31 +41,31 @@ spec:
             - name: EXIT_ON_ERROR
               value: "true"
 {{- range $index, $map := .Values.ldEnv }}
-{{- range $environment, $val := $map }}
-            - name: LD_ENV_{{ $environment | upper }}
+{{- range $name, $val := $map }}
+            - name: LD_ENV_{{ $name | upper }}
               valueFrom:
                 secretKeyRef:
-                  key: {{ $environment }}SdkKey
+                  key: {{ $name }}SdkKey
                   name: {{ $relName }}-{{ $chartName }}
 {{- if $redisEnabled }}
-            - name: LD_PREFIX_{{ $environment | upper }}
-              value: {{ $environment }}
+            - name: LD_PREFIX_{{ $name | upper }}
+              value: {{ $name }}
 {{- else }}
-            - name: LD_TABLE_NAME_{{ $environment | upper }}
-              value: {{ $environment }}
+            - name: LD_TABLE_NAME_{{ $name | upper }}
+              value: {{ $name }}
 {{- end }}
 {{- if .mobileKey }}
-            - name: LD_MOBILE_KEY_{{ $environment | upper }}
+            - name: LD_MOBILE_KEY_{{ $name | upper }}
               valueFrom:
                 secretKeyRef:
-                  key: {{ $environment }}MobileKey
+                  key: {{ $name }}MobileKey
                   name: {{ $relName }}-{{ $chartName }}
 {{- end }}
 {{- if .clientSideId }}
-            - name: LD_CLIENT_SIDE_ID_{{ $environment | upper }}
+            - name: LD_CLIENT_SIDE_ID_{{ $name | upper }}
               valueFrom:
                 secretKeyRef:
-                  key: {{ $environment }}ClientSideId
+                  key: {{ $name }}ClientSideId
                   name: {{ $relName }}-{{ $chartName }}
 {{- end }}
 {{- end }}
