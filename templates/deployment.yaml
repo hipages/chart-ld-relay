@@ -45,7 +45,7 @@ spec:
             - name: LD_ENV_{{ $environment | upper }}
               valueFrom:
                 secretKeyRef:
-                  key: {{ $environment }}sdkKey
+                  key: {{ $environment }}SdkKey
                   name: {{ $relName }}-{{ $chartName }}
 {{- if $redisEnabled }}
             - name: LD_PREFIX_{{ $environment | upper }}
@@ -58,14 +58,14 @@ spec:
             - name: LD_MOBILE_KEY_{{ $environment | upper }}
               valueFrom:
                 secretKeyRef:
-                  key: {{ $environment }}mobileKey
+                  key: {{ $environment }}MobileKey
                   name: {{ $relName }}-{{ $chartName }}
 {{- end }}
 {{- if .clientSideId }}
             - name: LD_CLIENT_SIDE_ID_{{ $environment | upper }}
               valueFrom:
                 secretKeyRef:
-                  key: {{ $environment }}clientSideId
+                  key: {{ $environment }}ClientSideId
                   name: {{ $relName }}-{{ $chartName }}
 {{- end }}
 {{- end }}
