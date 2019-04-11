@@ -12,12 +12,19 @@ image:
 nameOverride: "ld-relay"
 fullnameOverride: "chart-ld-relay"
 
-ldProdKey: <<enter your key here>>
-ldTestKey: <<enter your key here>>
+# ld can have user specified environments, these environments can have specific config
+# PREFIX and TABLE_NAME are auto geneated
+ldEnv:
+  - production:
+      sdkKey: <<enter your key here>>
+      mobileKey: <<enter your key here>>
+      clientSideId: <<enter your key here>>
+  - test:
+      sdkKey: <<enter your key here>>
 
-env: {}
 # env overrides
 # https://github.com/launchdarkly/ld-relay#docker-environment-variables
+env: {}
 
 prometheus:
   enabled: true

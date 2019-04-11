@@ -1,3 +1,6 @@
+{{- $relName := .Release.Name -}}
+{{- $chartName := .Chart.Name -}}
+{{- $redisEnabled := .Values.redis.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -37,16 +40,36 @@ spec:
 {{- end }}
             - name: EXIT_ON_ERROR
               value: "true"
-            - name: LD_ENV_PRODUCTION
+{{- range $index, $map := .Values.ldEnv }}
+{{- range $name, $val := $map }}
+            - name: LD_ENV_{{ $name | upper }}
               valueFrom:
                 secretKeyRef:
-                  key: prodkey
-                  name: {{ .Release.Name }}-{{ include "ld-relay.name" . }}
-            - name: LD_ENV_TEST
+                  key: {{ $name }}SdkKey
+                  name: {{ $relName }}-{{ $chartName }}
+{{- if $redisEnabled }}
+            - name: LD_PREFIX_{{ $name | upper }}
+              value: {{ $name }}
+{{- else }}
+            - name: LD_TABLE_NAME_{{ $name | upper }}
+              value: {{ $name }}
+{{- end }}
+{{- if .mobileKey }}
+            - name: LD_MOBILE_KEY_{{ $name | upper }}
               valueFrom:
                 secretKeyRef:
-                  key: testkey
-                  name: {{ .Release.Name }}-{{ include "ld-relay.name" . }}
+                  key: {{ $name }}MobileKey
+                  name: {{ $relName }}-{{ $chartName }}
+{{- end }}
+{{- if .clientSideId }}
+            - name: LD_CLIENT_SIDE_ID_{{ $name | upper }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ $name }}ClientSideId
+                  name: {{ $relName }}-{{ $chartName }}
+{{- end }}
+{{- end }}
+{{- end }}
 {{- if .Values.prometheus.enabled }}
             - name: USE_PROMETHEUS
               value: "true"
