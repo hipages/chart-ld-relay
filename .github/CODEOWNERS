@@ -9,7 +9,3 @@
 .github/*     @estahn @jurgenweber
 .circle*    @estahn @jurgenweber
 .releaserc  @estahn @jurgenweber
-
-# hip-new specific
-/*.sh        @estahn @jurgenweber
-/capistrano/ @estahn @jurgenweber
